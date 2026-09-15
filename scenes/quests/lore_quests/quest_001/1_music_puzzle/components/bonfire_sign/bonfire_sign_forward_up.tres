@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://ddpiw5p3lcyud"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ddpiw5p3lcyud"]
 
 [ext_resource type="Texture2D" uid="uid://bfa7cdn6b4bc7" path="res://scenes/quests/lore_quests/quest_001/1_music_puzzle/components/bonfire_sign/bonfire_sign_forward_up.png" id="1_rwfve"]
 
@@ -40,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3gre2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -66,7 +66,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ee2r5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"solved",
 "speed": 10.0
 }]

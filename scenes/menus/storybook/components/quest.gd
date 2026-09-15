@@ -15,8 +15,14 @@ enum Status {
 	BROKEN = 2,
 }
 
+## [Quest] resources must have this filename to be found by the game.
+const FILENAME := "quest.tres"
+
 ## The development status of this quest.
 @export var status: Status = Status.WORK_IN_PROGRESS
+
+## The 2-letter ISO 639 language code for the quest.
+@export_enum("en", "es") var language: String = "en"
 
 ## The quest's title. This should be short, like the title of a novel.
 @export var title: String
@@ -34,6 +40,15 @@ enum Status {
 ## The path to the first scene of the quest.
 @export_file("*.tscn") var first_scene: String
 
+## The number of threads that the player collects in this quest - typically one
+## at the end of each mini-game/challenge. This should match the number of
+## [CollectibleItem]s in the quest.
+@export_range(0, 6, 1, "suffix:threads") var threads_to_collect: int = 3
+
+## Optional dialogue to retell the adventures that occurred in the quest,
+## when returning the magical threads to the loom.
+@export var retelling: DialogueResource
+
 @export_group("Animation")
 
 ## An optional sprite frame library to show in the storybook page for this quest.
@@ -47,6 +62,23 @@ enum Status {
 @export var animation_name: StringName = &""
 
 
+## Lists all quests in [param quest_directory]; which is to say, all [Quest]
+## resources named [const FILENAME] which are in an immediate subdirectory of
+## [param quest_directory].
+## [br][br]
+## In Bash terms, this is: [code]$quest_directory/*/quest.tres[/code]
+static func enumerate(quest_directory: String) -> Array[Quest]:
+	var quests: Array[Quest] = []
+
+	for dir in ResourceLoader.list_directory(quest_directory):
+		var quest_path := quest_directory.path_join(dir).path_join(FILENAME)
+		if ResourceLoader.exists(quest_path):
+			var quest: Quest = ResourceLoader.load(quest_path)
+			quests.append(quest)
+
+	return quests
+
+
 func _validate_property(property: Dictionary) -> void:
 	match property["name"]:
 		"animation_name":
@@ -58,7 +90,8 @@ func _validate_property(property: Dictionary) -> void:
 
 
 func _to_string() -> String:
-	return '<Quest %s: "%s">' % [resource_path, title]
+	var subclass_name: StringName = (get_script() as Script).get_global_name()
+	return '<%s %s: "%s">' % [subclass_name, resource_path, title]
 
 
 ## Returns [member title] if set, or a placeholder identifying the quest otherwise.

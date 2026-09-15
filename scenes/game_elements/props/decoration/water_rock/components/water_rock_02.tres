@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://c5q1t8qd1h1pl"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://c5q1t8qd1h1pl"]
 
 [ext_resource type="Texture2D" uid="uid://c6sxykigjd1ls" path="res://assets/third_party/tiny-swords/Terrain/Water/Rocks/Rocks_02.png" id="1_l5d54"]
 
@@ -61,7 +61,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jvgy1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]

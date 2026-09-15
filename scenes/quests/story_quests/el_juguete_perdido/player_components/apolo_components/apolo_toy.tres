@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=12 format=3 uid="uid://ddpc5h6jtt6uq"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://ddpc5h6jtt6uq"]
 
 [ext_resource type="Texture2D" uid="uid://dscena446rcx7" path="res://scenes/quests/story_quests/el_juguete_perdido/player_components/apolo_components/apolo_toy_idle.png" id="3_tejsx"]
 [ext_resource type="Texture2D" uid="uid://d00jve3jiy4rr" path="res://scenes/quests/story_quests/el_juguete_perdido/player_components/apolo_components/apolo_walk.png" id="4_udpr3"]
@@ -72,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_udpr3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -95,7 +95,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_l7dit")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

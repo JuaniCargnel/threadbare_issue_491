@@ -1,7 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://bimk0s5gsbtl5"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bimk0s5gsbtl5"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kya4w"]
-load_path = "res://.godot/imported/shjourney_Eyes.png-4da3e9a738ed43eb2518a2de4b324af0.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y6b4i"]
 atlas = SubResource("CompressedTexture2D_kya4w")
@@ -29,7 +28,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y6b4i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -46,7 +45,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bxr3m")
 }],
-"loop": false,
+"loop": 0,
 "name": &"struck",
 "speed": 5.0
 }]

@@ -5,7 +5,8 @@ extends RefCounted
 
 const STORYQUESTS_PATH := "res://scenes/quests/story_quests/"
 const TEMPLATE_PREFIX := "NO_EDIT"
-const TEMPLATE_PATH := STORYQUESTS_PATH + TEMPLATE_PREFIX + "/"
+const TEMPLATE_ROOT_NODE_PREFIX := "NoEdit"
+const TEMPLATE_PATH := "res://scenes/quests/template_quests/" + TEMPLATE_PREFIX + "/"
 const QUEST_FILENAME := "quest.tres"
 const TILES_PATH := "res://tiles/"
 
@@ -100,6 +101,11 @@ func copy_packed_scene(packed_scene: PackedScene, copy_path: String) -> Resource
 
 		await maybe_copy_properties(node, path)
 
+	if scene.name.begins_with(TEMPLATE_ROOT_NODE_PREFIX):
+		var suffix := scene.name.substr(TEMPLATE_ROOT_NODE_PREFIX.length())
+		var pascal_case_name := quest_name.capitalize().replace(" ", "")
+		scene.name = pascal_case_name + suffix
+
 	copied.resource_path = copy_path
 
 	var result := copied.pack(scene)
@@ -108,10 +114,12 @@ func copy_packed_scene(packed_scene: PackedScene, copy_path: String) -> Resource
 	result = ResourceSaver.save(copied)
 	assert(result == OK, error_string(result))
 
+	scene.free()
+
 	return copied
 
 
-func copy_quest(quest: Quest, copy_path: String) -> Quest:
+func copy_quest(quest: StoryQuest, copy_path: String) -> StoryQuest:
 	var copied := quest.duplicate()
 	copied.title = _title
 	copied.description = _description
@@ -202,7 +210,7 @@ func copy(uid: String, resource: Resource) -> Resource:
 	var copied: Resource
 	if resource is PackedScene:
 		copied = await copy_packed_scene(resource, copy_path)
-	elif resource is Quest:
+	elif resource is StoryQuest:
 		copied = await copy_quest(resource, copy_path)
 	elif resource is CompressedTexture2D or resource is DialogueResource:
 		copied = await copy_as_file(resource, copy_path)
@@ -254,6 +262,17 @@ func copy_tilesets() -> void:
 func create_storyquest() -> void:
 	copy_tilesets()
 
-	var quest: Quest = load(TEMPLATE_PATH.path_join(QUEST_FILENAME))
-	await copy_resource(quest)
+	var quest: StoryQuest = load(TEMPLATE_PATH.path_join(QUEST_FILENAME))
+	var copied: StoryQuest = await copy_resource(quest)
 	EditorInterface.save_all_scenes()
+
+	# If the NO_EDIT template is configured as the opening quest, make this copy
+	# the opening quest instead.
+	var opening_quest := ThreadbareProjectSettings.get_setting(
+		ThreadbareProjectSettings.OPENING_QUEST
+	)
+	if ResourceUID.ensure_path(opening_quest) == ResourceUID.ensure_path(quest.resource_path):
+		ProjectSettings.set(
+			ThreadbareProjectSettings.OPENING_QUEST, ResourceUID.path_to_uid(copied.resource_path)
+		)
+		ProjectSettings.save()

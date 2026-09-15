@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://b7oxscw47ykwj"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://b7oxscw47ykwj"]
 
 [ext_resource type="Texture2D" uid="uid://d2vqk1r6dug6u" path="res://scenes/quests/story_quests/el_juguete_perdido/player_components/player_with_apolo_components/storyweaver_apolo_attack.png" id="1_q5cus"]
 [ext_resource type="Texture2D" uid="uid://f0ujlnlolad7" path="res://scenes/game_elements/characters/player/components/storyweaver_blue_defeated.png" id="3_8cdn3"]
@@ -144,7 +144,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mous1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_01",
 "speed": 10.0
 }, {
@@ -161,7 +161,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mous1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_02",
 "speed": 10.0
 }, {
@@ -199,7 +199,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nemgu")
 }],
-"loop": false,
+"loop": 0,
 "name": &"defeated",
 "speed": 10.0
 }, {
@@ -234,7 +234,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bx1wa")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -257,7 +257,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5c8tb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

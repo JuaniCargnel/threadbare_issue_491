@@ -1,10 +1,11 @@
 version = 1
 
-# .uid files are machine-generated and must be checked in but do not involve any
+# .uid and .gdignore files are machine-generated and must be checked in but do not involve any
 # creative work.
 [[annotations]]
 path = [
 	"**/*.uid",
+	"**/*.gdignore",
 ]
 SPDX-FileCopyrightText = "NONE"
 SPDX-License-Identifier = "CC0-1.0"
@@ -18,7 +19,11 @@ path = [
 	"addons/sprite_frames_exported_textures/plugin.cfg",
 	"addons/storyquest_bootstrap/plugin.cfg",
 	"addons/storyquest_bootstrap/*.tscn",
+	"addons/threadbare_editor/plugin.cfg",
 	"addons/threadbare_project_settings/plugin.cfg",
+	"assets/**/*.tres",
+	"locale/*.po",
+	"locale/*.pot",
 	"scenes/*.tscn",
 	"scenes/**/*.tscn",
 	"scenes/**/*.tres",
@@ -40,13 +45,13 @@ SPDX-FileCopyrightText = "2022-present Nathan Hoad and Dialogue Manager contribu
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
-path = "addons/git_describe/**"
-SPDX-FileCopyrightText = "Joseph Michael Ware (zibetnu)"
+path = "addons/input_helper/**"
+SPDX-FileCopyrightText = "2022-present Nathan Hoad"
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
-path = "addons/input_helper/**"
-SPDX-FileCopyrightText = "2022-present Nathan Hoad"
+path = "addons/phantom_camera/**"
+SPDX-FileCopyrightText = "2022-present Marcus Skov"
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
@@ -56,13 +61,6 @@ path = [
 ]
 SPDX-FileCopyrightText = "Pixel Frog"
 SPDX-License-Identifier = "CC0-1.0"
-
-[[annotations]]
-path = [
-	"assets/third_party/fonts/jersey/*.ttf",
-]
-SPDX-FileCopyrightText = "Copyright 2023 The Soft Type Project Authors (https://github.com/scfried/soft-type-jersey)"
-SPDX-License-Identifier = "OFL-1.1"
 
 [[annotations]]
 path = [
@@ -85,18 +83,3 @@ path = [
 ]
 SPDX-FileCopyrightText = "The Threadbare Authors"
 SPDX-License-Identifier = "CC-BY-SA-4.0"
-
-[[annotations]]
-path = [
-	"assets/third_party/inputs/**/*.png",
-	"assets/third_party/inputs/**/*.svg",
-	"assets/third_party/inputs/**/*.xml",
-	"assets/third_party/inputs/**/*.html",
-	"assets/third_party/inputs/**/*.url",
-	"assets/third_party/inputs/**/*.txt",
-	"assets/third_party/inputs/**/*.otf",
-	"assets/third_party/inputs/**/*.ttf",
-	"assets/third_party/inputs/**/*.swf",
-]
-SPDX-FileCopyrightText = "Kenney (www.kenney.nl)"
-SPDX-License-Identifier = "CC0-1.0"

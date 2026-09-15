@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=41 format=3 uid="uid://cxjwwgm86d6it"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cxjwwgm86d6it"]
 
 [ext_resource type="Texture2D" uid="uid://cktsg0p8rli0k" path="res://scenes/game_elements/characters/player/components/storyweaver_red_attack_01.png" id="1_bn0m5"]
 [ext_resource type="Texture2D" uid="uid://b1hipda8467yv" path="res://scenes/game_elements/characters/player/components/storyweaver_red_attack_02.png" id="2_4ljpj"]
@@ -161,7 +161,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_71e06")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_01",
 "speed": 10.0
 }, {
@@ -178,7 +178,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kgewq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_02",
 "speed": 10.0
 }, {
@@ -216,7 +216,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d4gba")
 }],
-"loop": false,
+"loop": 0,
 "name": &"defeated",
 "speed": 10.0
 }, {
@@ -251,7 +251,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5mcty")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -274,7 +274,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3r4ur")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

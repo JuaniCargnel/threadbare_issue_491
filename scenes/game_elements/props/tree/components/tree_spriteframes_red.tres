@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://djwymcffy83"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://djwymcffy83"]
 
 [ext_resource type="Texture2D" uid="uid://c58c4l1c7ojfa" path="res://scenes/game_elements/props/tree/components/Tree_Patches_Red.png" id="1_78yus"]
 
@@ -47,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r5rrb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]

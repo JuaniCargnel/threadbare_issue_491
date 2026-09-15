@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=29 format=3 uid="uid://dkldbyul3gceg"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dkldbyul3gceg"]
 
 [ext_resource type="Texture2D" uid="uid://bwh1w4qxg5lko" path="res://scenes/quests/story_quests/stella/1_stella_stealth/stella_stealth_components/stella_mayan_sculpture.png" id="1_27rl2"]
 
@@ -140,7 +140,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jbd2t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"alerted",
 "speed": 10.0
 }, {
@@ -172,7 +172,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qdvoo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -204,7 +204,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qr65n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

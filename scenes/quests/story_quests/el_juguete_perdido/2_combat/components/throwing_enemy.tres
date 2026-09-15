@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://c4d8ern43f006"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://c4d8ern43f006"]
 
 [ext_resource type="Texture2D" uid="uid://caiw3pli366vx" path="res://assets/third_party/tiny-swords/Factions/Goblins/Troops/TNT/Red/TNT_Red.png" id="1_5kxi1"]
 [ext_resource type="Texture2D" uid="uid://dm141vseriwsj" path="res://scenes/quests/story_quests/el_juguete_perdido/2_combat/components/goblindefeat.png" id="2_5kxi1"]
@@ -113,7 +113,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mf1to")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -124,7 +124,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8uqg7")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack anticipation",
 "speed": 10.0
 }, {
@@ -141,7 +141,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ay1sq")
 }],
-"loop": false,
+"loop": 0,
 "name": &"defeated",
 "speed": 10.0
 }, {
@@ -164,7 +164,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5m1ry")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -187,7 +187,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fiqn1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

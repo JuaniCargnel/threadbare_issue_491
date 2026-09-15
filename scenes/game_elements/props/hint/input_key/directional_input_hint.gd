@@ -2,166 +2,85 @@
 # SPDX-License-Identifier: MPL-2.0
 extends TextureRect
 
-# The input action this icon represents (e.g. "ui_accept").
-@export var action_name: StringName = "ui_accept"
+@export var action_prefix := &"move":
+	set = _set_action_prefix
+@export var devices: InputDeviceTextures = preload("uid://dptr7n813wvqd")
 
-# --- Keyboard (unified image) ---
-# Texture to show for keyboard input (normal and pressed variants).
-@export var keyboard_texture: Texture2D
-@export var keyboard_pressed_texture: Texture2D
+var _unpressed_action: StringName
+var _up_action: StringName
+var _down_action: StringName
+var _left_action: StringName
+var _right_action: StringName
 
-# --- Controller textures (normal / not pressed) ---
-# Platform-specific controller button images.
-@export var xbox_controller_texture: Texture2D
-@export var playstation_controller_texture: Texture2D
-@export var nintendo_controller_texture: Texture2D
-@export var steam_controller_texture: Texture2D
-
-# --- Controller pressed variants ---
-# Textures shown when the controller button is pressed.
-@export var xbox_pressed_texture: Texture2D
-@export var playstation_pressed_texture: Texture2D
-@export var nintendo_pressed_texture: Texture2D
-@export var steam_pressed_texture: Texture2D
-
-# When true, this node will show controller visuals as the main display
-# (used when we want controller images to be shown instead of keyboard).
-@export var is_controller_main_display: bool = false
-
-# Runtime state:
-var current_device: String = ""  # current input device identifier (e.g. "keyboard", "xbox")
-var is_keyboard_mode: bool = true  # whether we are currently showing keyboard visuals
+var _textures: DirectionalInputTextures
 
 
 func _ready() -> void:
-	# Attempt to use the project's InputHelper singleton (Threadbare addon).
-	if Engine.has_singleton("InputHelper"):
-		# Connect our handler so we update visuals whenever the input device changes.
-		InputHelper.device_changed.connect(_on_input_device_changed)
-		# Initialize visual state based on current InputHelper values.
-		_on_input_device_changed(InputHelper.device, InputHelper.device_index)
-	else:
-		# Simple fallback: treat the starting device as keyboard.
-		_on_input_device_changed("keyboard", -1)
+	action_prefix = action_prefix
+
+	InputHelper.device_changed.connect(_on_input_device_changed)
 
 
-func _physics_process(_delta: float) -> void:
-	# Check whether the action for this icon is being pressed right now.
-	var is_pressed := Input.is_action_pressed(action_name)
+func _on_input_device_changed(_device: String, _device_index: int) -> void:
+	_refresh_textures()
 
-	# Also check if any directional input is being pressed
-	# (used to hide controller icon while moving).
-	var any_direction_pressed := (
-		Input.is_action_pressed("move_up")
-		or Input.is_action_pressed("move_down")
-		or Input.is_action_pressed("move_left")
-		or Input.is_action_pressed("move_right")
-	)
 
-	# ---- KEYBOARD MODE ----
-	if is_keyboard_mode:
-		if keyboard_texture:
-			visible = true
-			if is_pressed:
-				if keyboard_pressed_texture:
-					texture = keyboard_pressed_texture
-					modulate = Color.WHITE
-				else:
-					# No explicit pressed texture -> reuse keyboard texture and darken it.
-					texture = keyboard_texture
-					modulate = Color(0.7, 0.7, 0.7)
-			else:
-				# Not pressed: normal keyboard texture and default modulation.
-				texture = keyboard_texture
-				modulate = Color.WHITE
-		else:
-			visible = false
+func _set_action_prefix(new_prefix: StringName) -> void:
+	action_prefix = new_prefix
+	_unpressed_action = action_prefix + "_unpressed"
+	_up_action = action_prefix + "_up"
+	_down_action = action_prefix + "_down"
+	_left_action = action_prefix + "_left"
+	_right_action = action_prefix + "_right"
+
+	if not is_node_ready():
 		return
 
-	# ---- CONTROLLER MODE ----
-	if is_controller_main_display:
-		if is_pressed:
-			visible = true
-			# Assign platform-specific pressed texture directly.
-			match current_device:
-				InputHelper.DEVICE_XBOX_CONTROLLER:
-					texture = xbox_pressed_texture
-				InputHelper.DEVICE_PLAYSTATION_CONTROLLER:
-					texture = playstation_pressed_texture
-				InputHelper.DEVICE_SWITCH_CONTROLLER:
-					texture = nintendo_pressed_texture
-				InputHelper.DEVICE_STEAMDECK_CONTROLLER:
-					texture = steam_pressed_texture
-				_:
-					# leave texture as null for now; we will apply a fallback below
-					texture = null
+	_refresh_textures()
 
-			# Final pressed texture fallback: prefer Xbox pressed, then Steam pressed.
-			if not texture:
-				texture = xbox_pressed_texture if xbox_pressed_texture else steam_pressed_texture
 
-		elif not any_direction_pressed:
-			visible = true
-			match current_device:
-				InputHelper.DEVICE_XBOX_CONTROLLER:
-					texture = xbox_controller_texture
-				InputHelper.DEVICE_PLAYSTATION_CONTROLLER:
-					texture = playstation_controller_texture
-				InputHelper.DEVICE_SWITCH_CONTROLLER:
-					texture = nintendo_controller_texture
-				InputHelper.DEVICE_STEAMDECK_CONTROLLER:
-					texture = steam_controller_texture
-				_:
-					texture = null
-
-			if not texture:
-				# Fallback controller image (prefer Xbox, then Steam)
-				texture = (
-					xbox_controller_texture if xbox_controller_texture else steam_controller_texture
-				)
-
-		else:
-			visible = false
+func _refresh_textures() -> void:
+	if InputHelper.device == InputHelper.DEVICE_KEYBOARD:
+		_set_keyboard()
 	else:
-		visible = false
+		_set_joypad()
 
 
-func _on_input_device_changed(device: String, _device_index: int) -> void:
-	current_device = device
-
-	if Engine.has_singleton("InputHelper"):
-		is_keyboard_mode = (device == InputHelper.DEVICE_KEYBOARD)
+func _set_keyboard() -> void:
+	var right_event := InputHelper.get_keyboard_input_for_action(action_prefix + "_right")
+	if right_event.physical_keycode != Key.KEY_RIGHT:
+		push_warning("Expected arrow keys as primary binding")
 	else:
-		is_keyboard_mode = device.to_lower() == "keyboard"
-
-	_update_visual_state()
+		_textures = devices.keyboard.arrow_keys
 
 
-func _update_visual_state() -> void:
-	if is_keyboard_mode:
-		if keyboard_texture:
-			visible = true
-			texture = keyboard_texture
-			modulate = Color.WHITE
+func _set_joypad() -> void:
+	var joypad: JoypadTextures = devices.joypads[InputHelper.device]
+
+	var right_event := InputHelper.get_joypad_input_for_action(action_prefix + "_right")
+	if right_event is InputEventJoypadMotion:
+		match right_event.axis:
+			JOY_AXIS_LEFT_X:
+				_textures = joypad.left_stick
+			JOY_AXIS_RIGHT_X:
+				_textures = joypad.right_stick
+			_:
+				push_warning("Unexpected binding for ", action_prefix, right_event)
+	elif right_event is InputEventJoypadButton:
+		if right_event.button_index == JOY_BUTTON_DPAD_RIGHT:
+			_textures = joypad.dpad
 		else:
-			visible = false
+			push_warning("Unexpected binding for ", action_prefix, right_event)
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_pressed(_up_action):
+		texture = _textures.up
+	elif Input.is_action_pressed(_down_action):
+		texture = _textures.down
+	elif Input.is_action_pressed(_left_action):
+		texture = _textures.left
+	elif Input.is_action_pressed(_right_action):
+		texture = _textures.right
 	else:
-		if is_controller_main_display:
-			visible = true
-			match current_device:
-				InputHelper.DEVICE_XBOX_CONTROLLER:
-					texture = xbox_controller_texture
-				InputHelper.DEVICE_PLAYSTATION_CONTROLLER:
-					texture = playstation_controller_texture
-				InputHelper.DEVICE_SWITCH_CONTROLLER:
-					texture = nintendo_controller_texture
-				InputHelper.DEVICE_STEAMDECK_CONTROLLER:
-					texture = steam_controller_texture
-				_:
-					texture = (
-						xbox_controller_texture
-						if xbox_controller_texture
-						else steam_controller_texture
-					)
-		else:
-			visible = false
+		texture = _textures.unpressed

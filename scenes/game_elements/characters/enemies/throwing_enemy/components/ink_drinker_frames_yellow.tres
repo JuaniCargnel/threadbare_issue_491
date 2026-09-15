@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://bs0idpewu2plj"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bs0idpewu2plj"]
 
 [ext_resource type="Texture2D" uid="uid://d2dwj6ha5y643" path="res://scenes/game_elements/characters/enemies/throwing_enemy/components/inkdrinker_attack_yellow.png" id="1_tvmry"]
 [ext_resource type="Texture2D" uid="uid://bh8jauo23rsl3" path="res://scenes/game_elements/characters/enemies/throwing_enemy/components/inkdrinker_defeated_yellow.png" id="2_tvmry"]
@@ -144,7 +144,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_202wv")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -161,7 +161,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_idvva")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack anticipation",
 "speed": 10.0
 }, {
@@ -193,7 +193,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_37g2e")
 }],
-"loop": false,
+"loop": 0,
 "name": &"defeated",
 "speed": 10.0
 }, {
@@ -222,7 +222,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g0loq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -245,7 +245,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ulucq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

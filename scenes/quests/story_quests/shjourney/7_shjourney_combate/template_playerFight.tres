@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=34 format=3 uid="uid://blbgeo0jjttf4"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://blbgeo0jjttf4"]
 
 [ext_resource type="Texture2D" uid="uid://c71mojxxxxfvj" path="res://scenes/quests/story_quests/shjourney/4_Laberinto/personajes/PJ_attack.png" id="1_5nfxk"]
 [ext_resource type="Texture2D" uid="uid://dp2c5hcg44j3d" path="res://scenes/quests/story_quests/shjourney/4_Laberinto/personajes/TimDefeated.png" id="2_5nfxk"]
@@ -145,7 +145,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i7pte")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_02",
 "speed": 10.0
 }, {
@@ -156,7 +156,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pcetw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"defeated",
 "speed": 5.0
 }, {
@@ -194,7 +194,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d3ug0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -226,7 +226,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xsfi4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

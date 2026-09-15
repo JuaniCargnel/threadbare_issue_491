@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=18 format=3 uid="uid://clh0qxc8buapj"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://clh0qxc8buapj"]
 
 [ext_resource type="Texture2D" uid="uid://benmgam31at4j" path="res://scenes/game_elements/props/checkpoint/components/Pink/Knitwitch_Appear.png" id="1_expcn"]
 [ext_resource type="Texture2D" uid="uid://brq07vcveqab5" path="res://scenes/game_elements/props/checkpoint/components/Pink/Knitwitch_Idle.png" id="2_3e7a0"]
@@ -93,7 +93,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uv74l")
 }],
-"loop": false,
+"loop": 0,
 "name": &"appear",
 "speed": 10.0
 }, {
@@ -116,7 +116,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4h561")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }]

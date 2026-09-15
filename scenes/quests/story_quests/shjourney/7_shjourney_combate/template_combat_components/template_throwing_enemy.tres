@@ -1,8 +1,8 @@
-[gd_resource type="SpriteFrames" load_steps=23 format=3 uid="uid://dnuphrwcns6p"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dnuphrwcns6p"]
 
 [ext_resource type="Texture2D" uid="uid://b1hcf8hr0gxay" path="res://scenes/quests/story_quests/shjourney/7_shjourney_combate/template_combat_components/DemonFinalAttackBigger.png" id="1_e4lbb"]
 [ext_resource type="Texture2D" uid="uid://dgcs25ib2ewva" path="res://scenes/quests/story_quests/shjourney/7_shjourney_combate/template_combat_components/DemonFinal-SheetAnticipationPrueba736.png" id="2_1gvpt"]
-[ext_resource type="Texture2D" uid="uid://cb3lim37pj3by" path="res://scenes/quests/story_quests/NO_EDIT/2_NO_EDIT_combat/NO_EDIT_combat_components/NO_EDIT_throwing_enemy_defeated.png" id="2_2ntg4"]
+[ext_resource type="Texture2D" uid="uid://cb3lim37pj3by" path="res://assets/first_party/templates/combat/NO_EDIT_throwing_enemy_defeated.png" id="2_2ntg4"]
 [ext_resource type="Texture2D" uid="uid://bcqqm4yfwniip" path="res://scenes/quests/story_quests/shjourney/7_shjourney_combate/template_combat_components/DemonFinal-SheetBigger.png" id="4_xoogk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qxtgu"]
@@ -83,7 +83,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qxtgu")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -97,7 +97,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1o1lv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack anticipation",
 "speed": 10.0
 }, {
@@ -114,7 +114,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7p5mt")
 }],
-"loop": false,
+"loop": 0,
 "name": &"defeated",
 "speed": 10.0
 }, {
@@ -146,7 +146,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_748wq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -154,7 +154,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_smstp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 10.0
 }]

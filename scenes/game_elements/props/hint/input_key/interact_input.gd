@@ -3,60 +3,86 @@
 extends TextureRect
 
 @export var action_name: StringName
-@export var keyboard_texture: Texture2D
-@export var xbox_controller_texture: Texture2D
-@export var playstation_controller_texture: Texture2D
-@export var nintendo_controller_texture: Texture2D
-@export var steam_controller_texture: Texture2D
+@export var alternative: bool = false
 
-var current_device: String = ""
-var is_keyboard_mode: bool = true
+@export var devices: InputDeviceTextures = preload("uid://dptr7n813wvqd")
 
 
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed(action_name):
-		if is_keyboard_mode:
-			# Keyboard mode: change color
-			modulate = Color.GRAY
-		else:
-			# Controller mode: only adjust color, without a "pressed" texture
-			modulate = Color.GRAY
+		modulate = Color.GRAY
 	else:
-		# Normal state
 		modulate = Color.WHITE
 
 
 func _ready() -> void:
-	InputHelper.device_changed.connect(_on_input_device_changed)
-	_on_input_device_changed(InputHelper.device, InputHelper.device_index)
+	if devices:
+		InputHelper.device_changed.connect(_on_input_device_changed)
+		_on_input_device_changed(InputHelper.device, InputHelper.device_index)
+	else:
+		push_warning("%s: Per-device textures not configured" % get_path())
 
 
 func _on_input_device_changed(device: String, _device_index: int) -> void:
-	current_device = device
-	visible = true  # Always visible (hybrid)
+	if device == InputHelper.DEVICE_KEYBOARD:
+		if alternative:
+			_set_mouse_texture()
+		else:
+			_set_keyboard_texture()
+	else:
+		_set_joypad_texture(device)
 
-	match device:
-		InputHelper.DEVICE_KEYBOARD:
-			is_keyboard_mode = true
-			if keyboard_texture:
-				texture = keyboard_texture
+	visible = (device == InputHelper.DEVICE_KEYBOARD or not alternative)
 
-		InputHelper.DEVICE_XBOX_CONTROLLER:
-			is_keyboard_mode = false
-			texture = xbox_controller_texture
 
-		InputHelper.DEVICE_PLAYSTATION_CONTROLLER:
-			is_keyboard_mode = false
-			texture = playstation_controller_texture
+func _set_joypad_texture(device: String) -> void:
+	var textures := devices.joypads[device]
+	var event := InputHelper.get_joypad_input_for_action(action_name)
+	if event is InputEventJoypadButton:
+		texture = textures.buttons.get(event.button_index)
+	elif event is InputEventJoypadMotion:
+		texture = textures.triggers.get(event.axis)
 
-		InputHelper.DEVICE_SWITCH_CONTROLLER:
-			is_keyboard_mode = false
-			texture = nintendo_controller_texture
+	if not texture:
+		push_warning("No %s texture for %s %s" % [device, action_name, event])
+		set_process(false)
 
-		InputHelper.DEVICE_STEAMDECK_CONTROLLER:
-			is_keyboard_mode = false
-			texture = steam_controller_texture
 
-		_:
-			is_keyboard_mode = false
-			texture = xbox_controller_texture
+func _set_keyboard_texture() -> void:
+	var event := InputHelper.get_keyboard_input_for_action(action_name)
+	if event is not InputEventKey:
+		push_warning("Primary keyboard binding for %s not a key: %s" % [action_name, event])
+		return
+
+	if event.physical_keycode:
+		# Try to show the logical label for physical mappings; i.e. on AZERTY
+		# show W when the physical binding is for Z. As of Godot 4.6, this API
+		# is only implemented on X11/Wayland/Mac/Windows; notably it is not
+		# available on the Web port.
+		if OS.has_feature("pc"):
+			var logical_keycode := DisplayServer.keyboard_get_keycode_from_physical(
+				event.physical_keycode
+			)
+			if logical_keycode and logical_keycode in devices.keyboard.keys:
+				texture = devices.keyboard.keys[logical_keycode]
+				return
+
+		# If logical keycode not available or not in keys map, use physical_keycode
+		if event.physical_keycode in devices.keyboard.keys:
+			texture = devices.keyboard.keys[event.physical_keycode]
+			return
+
+	if event.keycode and event.keycode in devices.keyboard.keys:
+		texture = devices.keyboard.keys[event.keycode]
+		return
+
+	push_warning("No keyboard texture for %s binding %s" % [action_name, event])
+
+
+func _set_mouse_texture() -> void:
+	for event: InputEvent in InputHelper.get_keyboard_inputs_for_action(action_name):
+		if event is InputEventMouseButton:
+			texture = devices.keyboard.mouse_buttons[event.button_index]
+			return
+
+	push_warning("No mouse binding for %s" % [action_name])
